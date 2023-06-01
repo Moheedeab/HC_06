@@ -1,0 +1,1 @@
+export const HC06_DEVICE_ID = '98:D3:C1:F9:67:60'; // Replace with your HC-06 device ID
