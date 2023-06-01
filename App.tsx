@@ -12,6 +12,8 @@ export default function App() {
   const [page, setPage] = useState('InitialScreen');
 
 
+
+  
   useEffect(() => {
     if (isConnecting) {
       connectToDevice();
