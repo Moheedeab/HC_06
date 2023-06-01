@@ -37,6 +37,10 @@ local.properties
 # node.js
 #
 node_modules/
+ios/
+.bundle/
+android/
+.watchmanconfig
 npm-debug.log
 yarn-error.log
 
