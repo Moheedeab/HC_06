@@ -12,9 +12,7 @@ import { useSelector } from 'react-redux';
 import connectionIf from '../data/connection';
 
 
-interface ConnectionStatusProps {
-  isConnected: boolean;
-}
+
 
 export const RgbScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
@@ -32,7 +30,10 @@ export const RgbScreen = () => {
 
       <ColorsPicker color={color} setColor={setColor}/>
       {/* @ts-ignore */}
-      <ConnectButton onPress={() => {navigation.navigate('MixerScreen', {color: color, weight: weight})}} status={false} Text={'Start Mixing'} />
+      <ConnectButton onPress={() => {navigation.navigate('MixerScreen', {color: color, weight: weight})  
+   
+}
+    } status={false} Text={'Start Mixing'} />
     </ScrollView>
   );
 };
