@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StatusBar } from "react-native";
 import { ColorMixer } from "../components/Titel/Titel";
 import { Logo } from "../components/Logo/Logo";
@@ -19,6 +19,11 @@ interface ConnectionStatusProps {
 export const RgbScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
   const navigation = useNavigation();
+  useEffect(() => {
+    if(!isConnected)
+      //@ts-ignore
+      navigation.navigate('Home')
+  },[isConnected])
   const [color, setColor] = React.useState("#000000");
   const [weight, setWeight] = React.useState(1);
   return (
