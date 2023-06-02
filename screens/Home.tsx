@@ -2,16 +2,26 @@ import React, { useState, useEffect } from 'react';
 import BluetoothSerial from 'react-native-bluetooth-serial-next';
 import {HC06_DEVICE_ID  } from '../constant/DeviceId';
 import {ConnectDevice} from '../screens/ConnectDevice';
+import connectionIf from '../data/connection';
+import { useDispatch, useSelector } from 'react-redux';
 import { HomeSecreen } from '../screens/HomeSecreen';
 export default function Home() {
   
-  const [isConnected, setIsConnected] = useState(false);
   const [message, setMessage] = useState('');
   const [receivedMessage, setReceivedMessage] = useState('');
-  const [isConnecting, setIsConnecting] = useState(false);
   const [page, setPage] = useState('InitialScreen');
 
-
+  const isConnected = useSelector(connectionIf.getIsConnected);
+  const isConnecting = useSelector(connectionIf.getIsConnecting);
+  const dispatch = useDispatch();
+  const disconnectFromDevice = async () => {
+    try {
+      await BluetoothSerial.disconnect();
+      BluetoothSerial.clear()
+      dispatch(connectionIf.setIsConnected(false));
+    } catch (error) {
+    }
+  };
 
   
   useEffect(() => {
@@ -21,17 +31,17 @@ export default function Home() {
   }, [isConnecting]);
 
   const connectToDevice = async () => {
-    setIsConnecting(true);
+    dispatch(connectionIf.setIsConnecting(true));
     try {
       await BluetoothSerial.requestEnable();
       await BluetoothSerial.connect(HC06_DEVICE_ID);
-      setIsConnected(true);
-      setIsConnecting(false);
+      dispatch(connectionIf.setIsConnecting(false));
+      dispatch(connectionIf.setIsConnected(true));
       setupBluetoothListener();
     } catch (error) {
       BluetoothSerial.clear
-      setIsConnected(false); // Set connected status to false if connection failed
-      setIsConnecting(false);
+      dispatch(connectionIf.setIsConnecting(false));
+      dispatch(connectionIf.setIsConnected(false));
 
     }
   };
@@ -51,22 +61,13 @@ export default function Home() {
       });
 
       BluetoothSerial.on('error', error => {
-        setIsConnected(false); // Set connected status to false if error occurs
+        dispatch(connectionIf.setIsConnected(false));
       });
     });
   };
 
-  const disconnectFromDevice = async () => {
-    try {
-      await BluetoothSerial.disconnect();
-      BluetoothSerial.clear()
-      setIsConnected(false);
-    } catch (error) {
-    }
-  };
-
   const handleConnectButtonPress = () => {
-    setIsConnecting(true);
+    dispatch(connectionIf.setIsConnecting(true));
    };
 
   return (
