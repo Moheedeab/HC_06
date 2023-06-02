@@ -2,13 +2,15 @@ import React from "react";
 import {Text, View } from "react-native";
 import { Card } from "../Card/Card";
 import { BlockStyle } from "./BlockStyle";
+import { useNavigation } from "@react-navigation/native";
 
 export const Block  =  ()=> {
-
+  const navigation = useNavigation();
   return (
     <View style={BlockStyle.container}>
       <View style={BlockStyle.row}>
-        <Card text={"RGB"} image={require('../../image/RGB.jpg')}/>
+        {/* @ts-ignore */}
+        <Card onPress={() => {navigation.navigate('RGB')}} text={"RGB"} image={require('../../image/RGB.jpg')}/>
         <Card text={"Camera"} image={require('../../image/Camera.png')} />    
       </View>
       
