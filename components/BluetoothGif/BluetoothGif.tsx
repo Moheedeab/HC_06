@@ -6,7 +6,7 @@ import { BluetoothGifStyle } from "./BluetoothGifStyle";
 export const BluetoothGif = () => {
   const clock1 = useClockValue();
   
-  const Bluetooth = useImage(require('/Users/MMM/Desktop/HC_06/image/Bluetooth.png'));
+  const Bluetooth = useImage(require(`../../image/Bluetooth.png`));
   const interval = 1600;
 
   const scale = useComputedValue(() => {
