@@ -1,15 +1,30 @@
 import React from "react";
-import { SafeAreaView, StatusBar } from "react-native";
+import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 import { ColorMixer } from "../components/Titel/Titel";
-import { NavigationContainer } from "@react-navigation/native";
+import { Logo } from "../components/Logo/Logo";
+import { ColorsPicker } from "../components/ColorsPicker/ColorsPicker";
+import { ConnectionStatus } from "../components/ConnectionStatus/ConnectionStatus";
+import { isConnected } from "react-native-bluetooth-serial-next";
+import { ConnectButton } from "../components/ConnectButton/ConnectButton";
+import { IncDecContainer } from "../components/IncDecContainer/IncDecContainer";
 
-export const RgbScreen = () => {
+interface ConnectionStatusProps {
+  isConnected: boolean;
+}
+
+export const RgbScreen = ({ isConnected }: ConnectionStatusProps) => {
   return (
-    <NavigationContainer>
-      <SafeAreaView style={{ backgroundColor: "#ffffff" }}>
-        <StatusBar backgroundColor="#ffffff" />
-        <ColorMixer />
-      </SafeAreaView>
-    </NavigationContainer>
+    <SafeAreaView style={{ backgroundColor: "#ffffff", height: 1000 }}>
+      <StatusBar backgroundColor="#ffffff" />
+      <ColorMixer />
+      <ConnectionStatus status={isConnected} />
+      <Logo />
+      <IncDecContainer />
+      
+
+      <ColorsPicker />
+      <ConnectButton onPress={() => {}} status={false} Text={'Start Mixing'} />
+    </SafeAreaView>
   );
 };
+

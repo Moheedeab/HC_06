@@ -5,6 +5,8 @@ import { Logo } from '../components/Logo/Logo';
 import { ConnectButton } from '../components/ConnectButton/ConnectButton';
 import React from 'react';
 import { Block } from '../components/Block/Block';
+import { RgbScreen } from './RgbScreen';
+import { MixingScreen } from './MixingScreen';
 
 
 interface ConnectionStatusProps {
@@ -16,14 +18,17 @@ export const HomeSecreen =  ({ isConnected,isConnecting,onPress }: ConnectionSta
 
 
     return ( 
-        <SafeAreaView style={{backgroundColor:"#ffffff"}} >
-        <StatusBar  backgroundColor="#ffffff" />           
-        <ColorMixer/>  
-        <ConnectionStatus status={isConnected} /> 
-        <Logo/>
-        <Block/>
-        <ConnectButton onPress={onPress} status={isConnecting} Text={'Disonnect'}/>
-        </SafeAreaView>
+      <MixingScreen isConnected={isConnected }/>
+        // <RgbScreen isConnected={isConnected}/>
+    
+        // <SafeAreaView style={{backgroundColor:"#ffffff"}} >
+        // <StatusBar  backgroundColor="#ffffff" />           
+        // <ColorMixer/>  
+        // <ConnectionStatus status={isConnected} /> 
+        // <Logo/>
+        // <Block/>
+        // <ConnectButton onPress={onPress} status={isConnecting} Text={'Disonnect'}/>
+        // </SafeAreaView>
     );
 
 }
