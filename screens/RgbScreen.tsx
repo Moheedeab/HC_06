@@ -19,18 +19,20 @@ interface ConnectionStatusProps {
 export const RgbScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
   const navigation = useNavigation();
+  const [color, setColor] = React.useState("#000000");
+  const [weight, setWeight] = React.useState(1);
   return (
     <ScrollView style={{ backgroundColor: "#ffffff", height: 1000 }}>
       <StatusBar backgroundColor="#ffffff" />
       <ColorMixer />
       <ConnectionStatus status={isConnected} />
       <Logo />
-      <IncDecContainer />
+      <IncDecContainer weight={weight} setWeight={setWeight}/>
       
 
-      <ColorsPicker />
+      <ColorsPicker color={color} setColor={setColor}/>
       {/* @ts-ignore */}
-      <ConnectButton onPress={() => {navigation.navigate('MixerScreen')}} status={false} Text={'Start Mixing'} />
+      <ConnectButton onPress={() => {navigation.navigate('MixerScreen', {color: color, weight: weight})}} status={false} Text={'Start Mixing'} />
     </ScrollView>
   );
 };

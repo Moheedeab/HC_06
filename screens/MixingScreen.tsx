@@ -17,14 +17,16 @@ interface ConnectionStatusProps {
 
 export const MixingScreen =  () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
+  const route = useRoute();
+  const {color, weight} = route.params as {color: string, weight: number}
     return ( 
         <ScrollView style={{backgroundColor:"#ffffff" ,height:1000}} >
         <StatusBar  backgroundColor="#ffffff" />           
         <ColorMixer/>  
         <ConnectionStatus status={isConnected} /> 
         <Logo/>
-        <Text style={MixingGifStyle.Rgb}>RGB Color = (122,120,11)</Text>
-        <Text style={MixingGifStyle.Weight}>Weight = 100 gm</Text>
+        <Text style={MixingGifStyle.Rgb}>{`RGB Color = ${color}`}</Text>
+        <Text style={MixingGifStyle.Weight}>{`Weight = ${weight} gm`}</Text>
        <MixingGif />
        <Text style={MixingGifStyle.Wait}> The machine is mixing </Text>
      

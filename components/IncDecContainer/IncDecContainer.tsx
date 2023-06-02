@@ -3,8 +3,11 @@ import {  View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-nati
 import { IncDecContainerStyle } from "./IncDecContainerStyle";
 
 
-
-export const IncDecContainer =  () => {
+type IncDecContainerProps = {
+  weight: number;
+  setWeight: (weight: number) => void;
+};
+export const IncDecContainer =  ({weight, setWeight}: IncDecContainerProps) => {
 
     return ( 
     
@@ -12,13 +15,13 @@ export const IncDecContainer =  () => {
         <View style={IncDecContainerStyle.buttonContainer}>
         <Text style={IncDecContainerStyle.text}>Weight:</Text>
 
-        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {}}>
+        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {setWeight(weight + 1)}}>
           <Text style={IncDecContainerStyle.buttonText}>+</Text>
         </TouchableOpacity>
 
-        <TextInput style={IncDecContainerStyle.input} keyboardType="numeric" placeholder="In gram" />
+        <TextInput value={weight.toString()} style={IncDecContainerStyle.input} keyboardType="numeric" placeholder="In gram" />
 
-        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {}}>
+        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {weight > 0 ? setWeight(weight - 1) : null}}>
           <Text style={IncDecContainerStyle.buttonText}>ــ</Text>
         </TouchableOpacity>
       </View>
