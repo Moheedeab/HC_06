@@ -18,7 +18,7 @@ export const RgbScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
   const navigation = useNavigation();
   const [color, setColor] = React.useState("#000000");
-  const [weight, setWeight] = React.useState(1);
+  const [weight, setWeight] = React.useState(20);
   return (
     <ScrollView style={{ backgroundColor: "#ffffff", height: 1000 }}>
       <StatusBar backgroundColor="#ffffff" />

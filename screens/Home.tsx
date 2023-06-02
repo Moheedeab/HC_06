@@ -71,10 +71,10 @@ export default function Home() {
    };
 
   return (
-    <HomeSecreen isConnected={isConnected} isConnecting={isConnecting} onPress={() => disconnectFromDevice()}/>
-//    isConnected ? (
-//     <HomeSecreen isConnected={isConnected} isConnecting={isConnecting} onPress={() => disconnectFromDevice()}/>)
-//   :(<ConnectDevice isConnected={isConnected} isConnecting={isConnecting} onPress={handleConnectButtonPress} />)
+   // <HomeSecreen isConnected={isConnected} isConnecting={isConnecting} onPress={() => disconnectFromDevice()}/>
+   isConnected ? (
+    <HomeSecreen isConnected={isConnected} isConnecting={isConnecting} onPress={() => disconnectFromDevice()}/>)
+  :(<ConnectDevice isConnected={isConnected} isConnecting={isConnecting} onPress={handleConnectButtonPress} />)
   
   );
 }

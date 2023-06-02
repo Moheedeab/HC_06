@@ -15,13 +15,13 @@ export const IncDecContainer =  ({weight, setWeight}: IncDecContainerProps) => {
         <View style={IncDecContainerStyle.buttonContainer}>
         <Text style={IncDecContainerStyle.text}>Weight:</Text>
 
-        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {setWeight(weight + 1)}}>
+        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {weight < 500 ? setWeight(weight + 20): null}}>
           <Text style={IncDecContainerStyle.buttonText}>+</Text>
         </TouchableOpacity>
 
         <TextInput value={weight.toString()} style={IncDecContainerStyle.input} keyboardType="numeric" placeholder="In gram" />
 
-        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {weight > 0 ? setWeight(weight - 1) : null}}>
+        <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {weight > 20 ? setWeight(weight - 20) : null}}>
           <Text style={IncDecContainerStyle.buttonText}>ــ</Text>
         </TouchableOpacity>
       </View>
