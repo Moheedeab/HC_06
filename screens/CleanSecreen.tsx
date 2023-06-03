@@ -39,6 +39,7 @@ export const CleanScreen = () => {
         
         setReceivedMessage(data.data);
         if(data.data == "cleaning done"){
+          //@ts-ignore
           navigation.navigate('Home')
         }
         console.log(data.data);
