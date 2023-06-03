@@ -35,6 +35,10 @@ export const CleanScreen = () => {
   const [receivedMessage, setReceivedMessage] = useState('');
   const setupBluetoothListener = () => {
     console.log("setupBluetoothListener")
+    BluetoothSerial.readFromDevice().then(data => {
+      setReceivedMessage(data.data);
+      console.log(data.data);
+    });
     BluetoothSerial.withDelimiter('\n').then(() => {
       BluetoothSerial.on('read', data => {
         
