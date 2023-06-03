@@ -68,12 +68,11 @@ export default function Home() {
   };
   
   useEffect(() => {
-    const call = async() => {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    const timer = setTimeout(() => {
       setupBluetoothListener()
       setCalled(!called);
-    }
-    call();
+    }, 1000);
+    return () => clearTimeout(timer);
   },[called])
 
   const handleConnectButtonPress = () => {
