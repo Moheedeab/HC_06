@@ -19,7 +19,7 @@ export const IncDecContainer =  ({weight, setWeight}: IncDecContainerProps) => {
           <Text style={IncDecContainerStyle.buttonText}>+</Text>
         </TouchableOpacity>
 
-        <TextInput value={weight.toString()} style={IncDecContainerStyle.input} keyboardType="numeric" placeholder="In gram" />
+        <TextInput value={weight.toString()+ "  gm"} style={IncDecContainerStyle.input} keyboardType="numeric"  />
 
         <TouchableOpacity style={IncDecContainerStyle.button} onPress={() => {weight > 20 ? setWeight(weight - 20) : null}}>
           <Text style={IncDecContainerStyle.buttonText}>ــ</Text>

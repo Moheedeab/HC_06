@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import {Text, View } from "react-native";
 import { Card } from "../Card/Card";
 import { BlockStyle } from "./BlockStyle";
 import { useNavigation } from "@react-navigation/native";
+import BluetoothSerial from "react-native-bluetooth-serial-next";
 
 export const Block  =  ()=> {
+
+  const [message, setMessage] = useState('');
+  const sendMessage = async (message: string) => {
+    try {
+      await BluetoothSerial.write(message);
+      setMessage(`Sent: ${message}`);
+    } catch (error) {
+    }
+  };
   const navigation = useNavigation();
   return (
     <View style={BlockStyle.container}>
@@ -15,8 +25,12 @@ export const Block  =  ()=> {
       </View>
       
       <View style={BlockStyle.row}>
+        
       <Card text={"Sensor"} image={require('../../image/ColorSensor.jpg')} />
-        <Card text={"Clean"}image={require('../../image/Clean.png')} />
+           {/* @ts-ignore */}
+        <Card onPress={() => {navigation.navigate('CleanScreen')
+               sendMessage('cleaning')}
+      } text={"Clean"}image={require('../../image/Clean.png')} />
       </View>
     </View>
 
