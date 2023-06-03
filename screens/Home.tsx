@@ -8,6 +8,7 @@ import { HomeSecreen } from '../screens/HomeSecreen';
 export default function Home() {
   
   const [message, setMessage] = useState('');
+  const [called, setCalled] = useState(false);
   const [receivedMessage, setReceivedMessage] = useState('');
   const [page, setPage] = useState('InitialScreen');
 
@@ -65,6 +66,15 @@ export default function Home() {
       });
     });
   };
+  
+  useEffect(() => {
+    const call = async() => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setupBluetoothListener()
+      setCalled(!called);
+    }
+    call();
+  },[called])
 
   const handleConnectButtonPress = () => {
     dispatch(connectionIf.setIsConnecting(true));
