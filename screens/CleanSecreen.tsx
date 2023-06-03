@@ -50,6 +50,7 @@ export const CleanScreen = () => {
     const timer = setTimeout(() => {
       setupBluetoothListener()
       setCalled(!called);
+      console.log("called")
     }, 1000);
     return () => clearTimeout(timer);
   },[called])
