@@ -34,14 +34,13 @@ export const CleanScreen = () => {
   const [called, setCalled] = useState(false);
   const [receivedMessage, setReceivedMessage] = useState('');
   const setupBluetoothListener = () => {
-    console.log("setupBluetoothListener")
-    BluetoothSerial.read((data) => {
-      console.log(data);
-    }, "\r\n");
     BluetoothSerial.withDelimiter('\n').then(() => {
       BluetoothSerial.on('read', data => {
         
         setReceivedMessage(data.data);
+        if(data.data == "cleaning done"){
+          navigation.navigate('Home')
+        }
         console.log(data.data);
       });
 
