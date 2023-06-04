@@ -47,7 +47,7 @@ export const CleanScreen = () => {
       BluetoothSerial.on('read', data => { 
         setReceivedMessage(data.data);
         if(receivedMessage.trim() == "Clean Ready"){ 
-          //setReceivedMessage(''); 
+         setReceivedMessage(''); 
          disconnectFromDevice()
         }
         console.log(receivedMessage);
