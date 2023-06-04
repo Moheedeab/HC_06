@@ -12,12 +12,21 @@ import BluetoothSerial from 'react-native-bluetooth-serial-next';
 
 export const CleanScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
+
+  const disconnectFromDevice = async () => {
+    try {
+      await BluetoothSerial.disconnect();
+      BluetoothSerial.clear()
+      dispatch(connectionIf.setIsConnected(false));
+    } catch (error) {
+    }
+  };
   const dispatch = useDispatch();
   const route = useRoute();
   const navigation = useNavigation();
   useEffect(() => {
     const handleBackButton = () => {
-      return false;
+      return true;
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
@@ -34,15 +43,14 @@ export const CleanScreen = () => {
   const [called, setCalled] = useState(false);
   const [receivedMessage, setReceivedMessage] = useState('');
   const setupBluetoothListener = () => {
-    BluetoothSerial.withDelimiter('\n').then(() => {
-      BluetoothSerial.on('read', data => {
-        
+      BluetoothSerial.withDelimiter('\n').then(() => {
+      BluetoothSerial.on('read', data => { 
         setReceivedMessage(data.data);
-        if(data.data == "cleaning done"){
-          //@ts-ignore
-          navigation.navigate('Home')
+        if(receivedMessage.trim() == "Clean Ready"){ 
+          //setReceivedMessage(''); 
+         disconnectFromDevice()
         }
-        console.log(data.data);
+        console.log(receivedMessage);
       });
 
       BluetoothSerial.on('error', error => {
@@ -51,12 +59,11 @@ export const CleanScreen = () => {
     });
   };
   useEffect(() => {
-    const timer = setTimeout(() => {
+  
       setupBluetoothListener()
-      setCalled(!called);
+      setCalled(called);
       console.log("called")
-    }, 1000);
-    return () => clearTimeout(timer);
+
   },[called])
 
     return ( 

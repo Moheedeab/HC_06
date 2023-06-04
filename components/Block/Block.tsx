@@ -29,7 +29,7 @@ export const Block  =  ()=> {
       <Card text={"Sensor"} image={require('../../image/ColorSensor.jpg')} />
            {/* @ts-ignore */}
         <Card onPress={() => {navigation.navigate('CleanScreen')
-               sendMessage('cleaning')}
+               sendMessage('Cleaning')}
       } text={"Clean"}image={require('../../image/Clean.png')} />
       </View>
     </View>
