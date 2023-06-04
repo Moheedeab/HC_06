@@ -8,7 +8,7 @@ import { HomeSecreen } from '../screens/HomeSecreen';
 export default function Home() {
   
   const [message, setMessage] = useState('');
-  const [called, setCalled] = useState(false);
+  const [called, setCalled] = useState(true);
   const [receivedMessage, setReceivedMessage] = useState('');
   const [page, setPage] = useState('InitialScreen');
 
@@ -47,13 +47,6 @@ export default function Home() {
     }
   };
 
-  const sendMessage = async (message: string) => {
-    try {
-      await BluetoothSerial.write(message);
-      setMessage(`Sent: ${message}`);
-    } catch (error) {
-    }
-  };
 
   const setupBluetoothListener = () => {
     BluetoothSerial.withDelimiter('\n').then(() => {
@@ -68,11 +61,8 @@ export default function Home() {
   };
   
   useEffect(() => {
-    const timer = setTimeout(() => {
       setupBluetoothListener()
-      setCalled(!called);
-    }, 1000);
-    return () => clearTimeout(timer);
+      setCalled(called);
   },[called])
 
   const handleConnectButtonPress = () => {

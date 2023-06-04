@@ -22,11 +22,10 @@ export const CleanScreen = () => {
     }
   };
   const dispatch = useDispatch();
-  const route = useRoute();
   const navigation = useNavigation();
   useEffect(() => {
     const handleBackButton = () => {
-      return true;
+      return false;
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
@@ -40,18 +39,23 @@ export const CleanScreen = () => {
       //@ts-ignore
       navigation.navigate('Home')
   },[isConnected])
-  const [called, setCalled] = useState(false);
-  const [receivedMessage, setReceivedMessage] = useState('');
+  const [called, setCalled] = useState(true);
+
   const setupBluetoothListener = () => {
-      BluetoothSerial.withDelimiter('\n').then(() => {
-      BluetoothSerial.on('read', data => { 
-        setReceivedMessage(data.data);
-        if(receivedMessage.trim() == "Clean Ready"){ 
-         setReceivedMessage(''); 
-         disconnectFromDevice()
-        }
-        console.log(receivedMessage);
-      });
+       BluetoothSerial.withDelimiter('\n').then(() => {
+       BluetoothSerial.on('read', data => {
+    
+          if (data.data.trim() == "Clean Ready") {
+            disconnectFromDevice();
+          }
+          else if (data.data.trim() == "Clean Not Ready") {
+            //@ts-ignore
+            navigation.navigate('NoWaterScreen');
+          }
+            console.log(data.data.trim()); 
+
+        });
+        
 
       BluetoothSerial.on('error', error => {
         dispatch(connectionIf.setIsConnected(false));
@@ -59,7 +63,6 @@ export const CleanScreen = () => {
     });
   };
   useEffect(() => {
-  
       setupBluetoothListener()
       setCalled(called);
       console.log("called")
