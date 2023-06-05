@@ -7,11 +7,10 @@ import BluetoothSerial from "react-native-bluetooth-serial-next";
 
 export const Block  =  ()=> {
 
-  const [message, setMessage] = useState('');
+  
   const sendMessage = async (message: string) => {
     try {
       await BluetoothSerial.write(message);
-      setMessage(`Sent: ${message}`);
     } catch (error) {
     }
   };

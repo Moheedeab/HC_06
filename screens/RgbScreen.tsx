@@ -18,7 +18,7 @@ export const RgbScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
   const navigation = useNavigation();
   const [color, setColor] = React.useState("#000000");
-  const [weight, setWeight] = React.useState(20);
+  const [weight, setWeight] = React.useState(50);
 
   const hexToRgb = (hex: string) => {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -28,11 +28,10 @@ export const RgbScreen = () => {
     
   };
 
-  const [message, setMessage] = useState('');
   const sendMessage = async (message: string) => {
     try {
       await BluetoothSerial.write(message);
-      setMessage(`Sent: ${message}`);
+      console.log(message)
     } catch (error) {
     }
   };
@@ -49,7 +48,7 @@ export const RgbScreen = () => {
       <ColorsPicker color={color} setColor={setColor}/>
       {/* @ts-ignore */}
       <ConnectButton onPress={() => {navigation.navigate('MixerScreen', {color: color, weight: weight});
-      sendMessage(hexToRgb(color)+","+weight);
+      sendMessage("RGB"+","+hexToRgb(color)+","+weight);
 }
     } status={false} Text={'Start Mixing'} />
     </ScrollView>

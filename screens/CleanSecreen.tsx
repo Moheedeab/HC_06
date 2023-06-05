@@ -63,7 +63,10 @@ export const CleanScreen = () => {
           },[called])
 
           const handleReceivedMessage = (receivedMessage: string) => {
-            console.log(receivedMessage)
+            if(receivedMessage != ""){
+              console.log(receivedMessage)
+            }
+         
             if (receivedMessage.trim() == "Clean Ready") {
               disconnectFromDevice();
             } else if (receivedMessage.trim() == "Clean Not Ready") {
