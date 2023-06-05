@@ -12,6 +12,8 @@ import BluetoothSerial from 'react-native-bluetooth-serial-next';
 
 export const CleanScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
+  const [called, setCalled] = useState(true);
+  const [receivedMessage, setReceivedMessage] = useState('');
 
   const disconnectFromDevice = async () => {
     try {
@@ -21,11 +23,13 @@ export const CleanScreen = () => {
     } catch (error) {
     }
   };
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   useEffect(() => {
     const handleBackButton = () => {
-      return false;
+      return true;
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
@@ -34,40 +38,51 @@ export const CleanScreen = () => {
       backHandler.remove();
     };
   }, []);
+
   useEffect(() => {
     if(!isConnected)
       //@ts-ignore
       navigation.navigate('Home')
   },[isConnected])
-  const [called, setCalled] = useState(true);
-
-  const setupBluetoothListener = () => {
-       BluetoothSerial.withDelimiter('\n').then(() => {
-       BluetoothSerial.on('read', data => {
-    
-          if (data.data.trim() == "Clean Ready") {
-            disconnectFromDevice();
-          }
-          else if (data.data.trim() == "Clean Not Ready") {
-            //@ts-ignore
-            navigation.navigate('NoWaterScreen');
-          }
-            console.log(data.data.trim()); 
-
-        });
+                   
+          const setupBluetoothListener = () => {
+            BluetoothSerial.withDelimiter('\n').then(() => {
+              BluetoothSerial.on('read', data => {
+                setReceivedMessage(data.data);
+              });
         
+              BluetoothSerial.on('error', error => {
+                dispatch(connectionIf.setIsConnected(false));
+              });
+            });
+          };
+          
+          useEffect(() => {
+              setupBluetoothListener()
+              setCalled(true);
+          },[called])
 
-      BluetoothSerial.on('error', error => {
-        dispatch(connectionIf.setIsConnected(false));
-      });
-    });
-  };
-  useEffect(() => {
-      setupBluetoothListener()
-      setCalled(called);
-      console.log("called")
+          const handleReceivedMessage = (receivedMessage: string) => {
+            console.log(receivedMessage)
+            if (receivedMessage.trim() == "Clean Ready") {
+              disconnectFromDevice();
+            } else if (receivedMessage.trim() == "Clean Not Ready") {
+              //@ts-ignore
+              navigation.navigate('NoWaterScreen');
+            } else {
+              // Keep waiting for a valid message
+              setTimeout(() => {
+                handleReceivedMessage(receivedMessage);
+              }, 60000); // Adjust the timeout duration as needed
+            }
+          };
 
-  },[called])
+
+          useEffect(() => {
+            handleReceivedMessage(receivedMessage);
+          }, [receivedMessage]);
+
+
 
     return ( 
       
