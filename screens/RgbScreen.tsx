@@ -31,7 +31,11 @@ export const RgbScreen = () => {
   const sendMessage = async (message: string) => {
     try {
       await BluetoothSerial.write(message);
+      console.log("RN SEND")
       console.log(message)
+      /* @ts-ignore */
+      navigation.navigate('MixerScreen', {color: color, weight: weight});
+                
     } catch (error) {
     }
   };
@@ -46,8 +50,9 @@ export const RgbScreen = () => {
       <Logo />
       <IncDecContainer weight={weight} setWeight={setWeight}/>
       <ColorsPicker color={color} setColor={setColor}/>
-      {/* @ts-ignore */}
-      <ConnectButton onPress={() => {navigation.navigate('MixerScreen', {color: color, weight: weight});
+  
+      <ConnectButton onPress={() => {
+
       sendMessage("RGB"+","+hexToRgb(color)+","+weight);
 }
     } status={false} Text={'Start Mixing'} />

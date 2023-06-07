@@ -11,7 +11,12 @@ export const Block  =  ()=> {
   const sendMessage = async (message: string) => {
     try {
       await BluetoothSerial.write(message);
+      console.log("RN SEND")
+      console.log(message)
+                {/* @ts-ignore */}
+                navigation.navigate('CleanScreen')
     } catch (error) {
+      
     }
   };
   const navigation = useNavigation();
@@ -26,9 +31,10 @@ export const Block  =  ()=> {
       <View style={BlockStyle.row}>
         
       <Card text={"Sensor"} image={require('../../image/ColorSensor.jpg')} />
-           {/* @ts-ignore */}
-        <Card onPress={() => {navigation.navigate('CleanScreen')
-               sendMessage('Cleaning')}
+       
+        <Card onPress={() => {
+               sendMessage('Cleaning')
+              }
       } text={"Clean"}image={require('../../image/Clean.png')} />
       </View>
     </View>

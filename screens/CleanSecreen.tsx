@@ -12,7 +12,6 @@ import BluetoothSerial from 'react-native-bluetooth-serial-next';
 
 export const CleanScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
-  const [called, setCalled] = useState(true);
   const [receivedMessage, setReceivedMessage] = useState('');
 
   const disconnectFromDevice = async () => {
@@ -29,7 +28,7 @@ export const CleanScreen = () => {
 
   useEffect(() => {
     const handleBackButton = () => {
-      return true;
+      return false;
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
@@ -59,8 +58,7 @@ export const CleanScreen = () => {
           
           useEffect(() => {
               setupBluetoothListener()
-              setCalled(true);
-          },[called])
+          },[])
 
           const handleReceivedMessage = (receivedMessage: string) => {
             if(receivedMessage != ""){
@@ -72,12 +70,7 @@ export const CleanScreen = () => {
             } else if (receivedMessage.trim() == "Clean Not Ready") {
               //@ts-ignore
               navigation.navigate('NoWaterScreen');
-            } else {
-              // Keep waiting for a valid message
-              setTimeout(() => {
-                handleReceivedMessage(receivedMessage);
-              }, 60000); // Adjust the timeout duration as needed
-            }
+            } 
           };
 
 

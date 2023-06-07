@@ -12,14 +12,13 @@ import BluetoothSerial from 'react-native-bluetooth-serial-next';
 
 export const MixingScreen = () => {
   const isConnected = useSelector(connectionIf.getIsConnected);
-  const [called, setCalled] = useState(true);
   const [receivedMessage, setReceivedMessage] = useState('');
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   useEffect(() => {
     const handleBackButton = () => {
-      return true;
+      return false;
     };
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
@@ -46,8 +45,7 @@ export const MixingScreen = () => {
 
   useEffect(() => {
     setupBluetoothListener()
-    setCalled(true);
-},[called])
+},[])
 
 const handleReceivedMessage = (receivedMessage: string) => {
   if(receivedMessage != ""){
@@ -58,12 +56,7 @@ const handleReceivedMessage = (receivedMessage: string) => {
         //@ts-ignore
     navigation.navigate('Home');
   } 
-   else {
-    // Keep waiting for a valid message
-    setTimeout(() => {
-      handleReceivedMessage(receivedMessage);
-    }, 60000); // Adjust the timeout duration as needed
-  }
+
 };
 
 
